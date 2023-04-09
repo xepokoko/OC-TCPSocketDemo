@@ -119,7 +119,7 @@
 - (void)spinToReceiveClient {
     while (1) {
         struct sockaddr_in peerAddr;
-        /// 对端的socket id
+        /// 建立连接后生成的新socket，要和对方通信接下来就要用这个新的socket。每建立一个连接就会新生成多一个，根据这个去区分不同的连接。
         int peerSocketId;
         socklen_t addrLen = sizeof(peerAddr);
         
@@ -154,7 +154,7 @@
 
                 } while (1);
                 NSLog(@"释放本次连接");
-                // 根据对端socket来决定释放哪个连接（因为服务端建立多个连接
+                // 根据新生成的socket来决定释放哪个连接（因为服务端建立多个连接
                 close(peerSocketId);
             }];
             [th start];
